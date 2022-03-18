@@ -31,4 +31,4 @@ spec:
           valueForm:
             secretKeyRef:
               name: mongodb-secret
-              key: password #testing
+              key: password
