@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+    name: mongo-ingress
+    # namespace: mongo-project
+spec:
+    tls:  # adding TLS/SSL Certificate
+    - hosts:
+      - mongo-app.com
+      secretName: mongo-secret-tls
+    rules: 
+        - host: mongo-app.com # this is dummy and what should be like when accessing the cluster
+          http:
+            paths: # /mongodb # adding path for the domain
+            - backend:
+                serviceName: mongo-internal-service
+                servicePort: 8081

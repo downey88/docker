@@ -1,47 +1,47 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mongo
-# namespace: mongo-project
-  labels: 
-    app: mongodb
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
+    name: mongo
+    # namespace: mongo-project
+    labels: 
       app: mongodb
-  template:
-    metadata:
-      labels: 
+spec:
+    replicas: 1
+    selector:
+      matchLabels:
         app: mongodb
-    spec:
-      containers: 
-      - name: mongodb
-        image: mongo #pulling image from Docker Hub for mongoDB
-        ports:
-        - containerPort: 27017
-        env:
-        - name: MONGO_INITDB_ROOT_USERNAME
-          #value:
-          valueFrom: # takes reference from mongo-secret.yml
-            secretKeyRef:
-              name: mongo-secret
-              key: mongo-username
-        - name: MONGO_INITDB_ROOT_PASSWORD
-          valueFrom: # takes reference from mongo-secret.yml
-            secretKeyRef:
-              name: mongo-secret
-              key: mongo-password
+    template:
+      metadata:
+        labels: 
+          app: mongodb
+      spec:
+        containers: 
+        - name: mongodb
+          image: mongo #pulling image from Docker Hub for mongoDB
+          ports:
+          - containerPort: 27017
+          env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            #value:
+            valueFrom: # takes reference from mongo-secret.yml
+              secretKeyRef:
+                name: mongo-secret
+                key: mongo-username
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom: # takes reference from mongo-secret.yml
+              secretKeyRef:
+                name: mongo-secret
+                key: mongo-password
  
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: mongo-service
+    name: mongo-service
 spec:
-  selector:
-    app: mongodb
-  ports:
-    - protocol: TCP
-      port: 27017
-      targetPort: 27017
+    selector:
+      app: mongodb
+    ports:
+      - protocol: TCP
+        port: 27017
+        targetPort: 27017
